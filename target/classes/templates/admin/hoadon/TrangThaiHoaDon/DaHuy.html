@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/admin/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/css/fonts-googleapis.css}">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/admin/js/jquery.min.js}"></script>
+    <script th:src="@{/admin/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/admin/js/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
+    <script th:src="@{/admin/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/admin/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/admin/js/demo/datatables-demo.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bao gồm thư viện jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
+    <!-- CSS của jQuery UI (nếu cần) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <!-- Thư viện SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        .fas.fa-history:before {
+            content: "\f1da"; /* Mã Unicode tương ứng với biểu tượng "fa-history" */
+        }
+        #modalChiTiet .modal-dialog {
+            max-width: 1400px;
+            width: 1400px;
+        }
+
+        #modalChiTiet .modal-content {
+            height: 450px;
+        }
+
+        .pagination {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination li a {
+            display: inline-block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .pagination li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination .active a {
+            background-color: #ccc;
+            cursor: default;
+        }
+
+        .pagination-empty {
+            display: none;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #4c9aff;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+        }
+
+        h1:before {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4c9aff;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .action-button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-button:focus {
+            outline: none;
+        }
+
+        .XacNhanDon {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .alert-warning {
+            margin-top: 1rem;
+        }
+
+        .modal-title {
+            text-align: center;
+            margin-left: 160px;
+            color: #1ab7ea;
+        }
+
+        .tab-pane {
+            display: none;
+            /* Ẩn tất cả các bảng */
+        }
+
+        .tab-pane.show {
+            display: block;
+            /* Hiển thị bảng tương ứng với tab hiện tại */
+        }
+
+        body {
+            margin-top: 20px;
+        }
+
+        .timeline-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .timeline-steps .timeline-step {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 1rem
+        }
+
+        @media (min-width: 768px) {
+            .timeline-steps .timeline-step:not(:last-child):after {
+                content: "";
+                display: block;
+                border-top: .25rem dotted #3b82f6;
+                width: 3.46rem;
+                position: absolute;
+                left: 7.5rem;
+                top: .3125rem
+            }
+
+            .timeline-steps .timeline-step:not(:first-child):before {
+                content: "";
+                display: block;
+                border-top: .25rem dotted #3b82f6;
+                width: 3.8125rem;
+                position: absolute;
+                right: 7.5rem;
+                top: .3125rem
+            }
+        }
+
+        .timeline-steps .timeline-content {
+            width: 10rem;
+            text-align: center
+        }
+
+        .timeline-steps .timeline-content .inner-circle {
+            border-radius: 1.5rem;
+            height: 1rem;
+            width: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3b82f6
+        }
+
+        .timeline-steps .timeline-content .inner-circle:before {
+            content: "";
+            background-color: #3b82f6;
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
+            min-width: 3rem;
+            border-radius: 6.25rem;
+            opacity: .5
+        }
+
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .button-group button {
+            flex: 1;
+            height: 30px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 15px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-group-a button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .button-group-a button {
+            flex: 1;
+            height: 30px;
+            width: 50px;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 5px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-group-a button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .hduong1 {
+            display: flex;
+            gap: 5px;
+        }
+
+        .hduong1 button {
+            flex: 1;
+            height: 40px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 150px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hduong1 button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .modal-header .btn-close {
+            display: none;
+        }
+
+        .modal-header .close {
+            display: none;
+        }
+
+        .hduong {
+            display: flex;
+            gap: 5px;
+            float: left;
+            padding: 5px;
+        }
+
+        .custom-input {
+            width: 400px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: #4c9aff;
+            box-shadow: 0 0 5px rgba(76, 154, 255, 0.5);
+        }
+
+        .hduong1 {
+            display: flex;
+            gap: 5px;
+            float: right;
+        }
+
+        .b1 {
+            width: 150px;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4c9aff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .b1:hover {
+            background-color: #357ae8;
+        }
+
+        .btnTimKiem {
+            background-color: #4c9aff;
+        }
+
+        .btnTimKiem:hover {
+            background-color: #357ae8;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table thead th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .custom-tabs .nav-link {
+            position: relative;
+            padding: 10px 20px;
+            color: #333;
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .custom-tabs .nav-link.active {
+            background-color: #4c9aff;
+            color: #fff;
+        }
+
+        .custom-tabs .nav-link:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .custom-tabs .nav-link:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .custom-tabs .nav-link.active:before {
+            background-color: #fff;
+        }
+
+        .custom-tabs .nav-link:not(.active):before {
+            display: none;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .tab-button {
+            flex: 1;
+            position: relative;
+            padding: 10px 0;
+            color: #333;
+            font-weight: bold;
+            background-color: transparent;
+            border: none;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background-color: #4c9aff;
+            color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-button:hover {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .tab-button.active:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .tab-button:not(.active):before {
+            content: none;
+        }
+
+    </style>
+
+    <script th:inline="javascript">
+        function redirectToTatCaDon() {
+            window.location.href = "/admin/DonHang/TatCaDon";
+        }
+
+        function redirectToChoxacNhan() {
+            window.location.href = "/admin/DonHang/ChoXacNhanDonHang";
+        }
+
+        function redirectToChoGiaoHang() {
+            window.location.href = "/admin/DonHang/ChoGiaoHang";
+        }
+
+        function redirectToDangGiao() {
+            window.location.href = "/admin/DonHang/DangGiaoHang";
+        }
+
+        function redirectToDaGiao() {
+            window.location.href = "/admin/DonHang/DaGiaoHang";
+        }
+
+        function redirectToDahuy() {
+            window.location.href = "/admin/DonHang/DaHuyHang";
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <div class="tab-buttons">
+        <button class="tab-button" onclick="redirectToTatCaDon()">Tất cả đơn</button>
+        <button class="tab-button" onclick="redirectToChoxacNhan()">Chờ xác nhận</button>
+        <button class="tab-button" onclick="redirectToChoGiaoHang()">Chờ giao hàng</button>
+        <button class="tab-button" onclick="redirectToDangGiao()">Đang giao</button>
+        <button class="tab-button" onclick="redirectToDaGiao()">Đã giao</button>
+        <button class="tab-button active" onclick="redirectToDahuy()">Đã hủy</button>
+    </div>
+    <h1>
+        Đã hủy
+    </h1>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Tìm kiếm..." id="search-input-daHuy">
+        <div class="input-group-append">
+            <button class="btn btn-primary btnTimKiem" type="button" onclick="searchByIdDaHuy()">Tìm kiếm
+            </button>
+        </div>
+
+        <input type="date" class="form-control" id="search-input-date-DaHuy">
+        <button class="btn btn-primary" type="button" onclick="searchByCreationDate()">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <table id="user-table-DaHuy" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Ngày tạo đơn</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Ghi chú</th>
+            <th scope="col">Xem chi tiết</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hoaDon : ${DaHuy}">
+            <th scope="row" th:text="${hoaDon.maDon}"></th>
+            <td th:text="${hoaDon.khachHang.hoTen}"></td>
+            <td th:text="${hoaDon.sdtNguoiNhan}"></td>
+            <td th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></td>
+            <td th:text="${hoaDon.tongTienHoaDon}"></td>
+            <td th:text="${hoaDon.ghiChu}"></td>
+            <td>
+                <div class="button-group-a">
+                    <div class="btn-group">
+                        <a th:href="@{'/ChiTietHoaDon/DaHuy/hoa-don-id=' + ${hoaDon.id}}" class="btn btn-warning btn-sm" type="submit">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <ul class="pagination" th:classappend="${pageDaHuy > 0} ? '' : 'pagination-empty'">
+            <li th:each="pageNumber : ${#numbers.sequence(0, pageDaHuy - 1)}">
+                <a th:href="@{/admin/DonHang/DaHuyHang(page=${pageNumber})}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="alert alert-warning container mt-3 text-center" th:if="${#lists.isEmpty(DaHuy)}"
+         style="background-color: transparent; border: none;">
+        <span style="font-size: 1.2em;">Không có dữ liệu</span>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+<!-- JS TÌM HÓA ĐƠN ĐÃ HỦY-->
+<script th:inline="javascript">
+    function searchByIdDaHuy() {
+        var input = document.getElementById("search-input-daHuy").value.trim().toLowerCase();
+        var table = document.getElementById("user-table-DaHuy");
+        var rows = table.getElementsByTagName("tr");
+
+        var found = false; // Biến kiểm tra xem đã tìm thấy kết quả hay chưa
+
+        for (var i = 0; i < rows.length; i++) {
+            var orderIdCell = rows[i].getElementsByTagName("th")[0];
+            var customerNameCell = rows[i].getElementsByTagName("td")[0];
+            var phoneNumberCell = rows[i].getElementsByTagName("td")[2];
+            var totalPriceCell = rows[i].getElementsByTagName("td")[3];
+            var noteCell = rows[i].getElementsByTagName("td")[3];
+
+            if (orderIdCell && customerNameCell && phoneNumberCell && totalPriceCell && noteCell) {
+                var orderId = orderIdCell.textContent.trim().toLowerCase();
+                var customerName = customerNameCell.textContent.trim().toLowerCase();
+                var phoneNumber = phoneNumberCell.textContent.trim().toLowerCase();
+                var totalPrice = parseFloat(totalPriceCell.textContent.replace(/[^0-9.]/g, ''));
+                var note = noteCell.textContent.trim().toLowerCase();
+
+                if (
+                    orderId.indexOf(input) > -1 ||
+                    customerName.indexOf(input) > -1 ||
+                    phoneNumber.indexOf(input) > -1 ||
+                    totalPrice.toString().indexOf(input) > -1 ||
+                    note.indexOf(input) > -1
+                ) {
+                    rows[i].style.display = "";
+                    found = true; // Đánh dấu đã tìm thấy kết quả
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        if (!found) {
+            Array.from(rows).forEach(function (row) {
+                row.style.display = ""; // Hiển thị lại tất cả các dòng
+            });
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Không tìm thấy',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+</script>
+
+<script th:inline="javascript">
+    function searchByCreationDate() {
+        var inputDate = document.getElementById("search-input-date-DaHuy").value;
+        var table = document.getElementById("user-table-DaHuy");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var creationDateCell = rows[i].getElementsByTagName("td")[2]; // Điều chỉnh chỉ mục nếu cần thiết
+
+            if (creationDateCell) {
+                var creationDate = creationDateCell.innerText;
+                var formattedCreationDate = formatDate(creationDate);
+
+                if (formattedCreationDate === inputDate) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function formatDate(dateString) {
+        var parts = dateString.split("/");
+        var day = parts[0];
+        var month = parts[1];
+        var year = parts[2];
+        return year + "-" + month + "-" + day;
+    }
+</script>
+
+
+
+
+
+
+

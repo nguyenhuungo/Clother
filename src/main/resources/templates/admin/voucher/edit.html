@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index.html}">
+<head>
+    <title>Discount Codes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="container">
+        <h2 th:if="${voucher != null && voucher.id > 0}">Sửa mã giảm giá</h2>
+        <h2 th:unless="${voucher != null && voucher.id > 0}">Thêm mã giảm giá</h2>
+        <form method="post" th:object="${voucher}">
+            <input type="hidden" id="id" th:field="*{id}"/>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-end" for="tenKhuyenMai">Tên khuyến mãi:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" />
+                    <p th:if="${#fields.hasErrors('tenKhuyenMai')}" th:errorclass="error" th:errors="*{tenKhuyenMai}"></p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-end" for="ngayBatDau">Ngày bắt đầu:</label>
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" id="ngayBatDau" th:field="*{ngayBatDau}" />
+                    <p th:if="${#fields.hasErrors('ngayBatDau')}" th:errorclass="error" th:errors="*{ngayBatDau}"></p>
+
+                </div>
+                <label class="col-sm-3 col-form-label text-end" for="ngayKetThuc">Ngày kết thúc:</label>
+                <div class="col-sm-3">
+                    <input type="date" class="form-control" id="ngayKetThuc" th:field="*{ngayKetThuc}" />
+                    <p th:if="${#fields.hasErrors('ngayKetThuc')}" th:errorclass="error" th:errors="*{ngayKetThuc}"></p>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-end" for="phanTramGiam">Phần trăm giảm:</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="phanTramGiam" th:field="*{phanTramGiam}" />
+                    <p th:if="${#fields.hasErrors('phanTramGiam')}" th:errorclass="error" th:errors="*{phanTramGiam}"></p>
+                </div>
+                <label class="col-sm-3 col-form-label text-end" for="giaTriToiThieu">Giá trị tối thiểu:</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="giaTriToiThieu" th:field="*{giaTriToiThieu}"
+                    />
+                    <p th:if="${#fields.hasErrors('giaTriToiThieu')}" th:errorclass="error" th:errors="*{giaTriToiThieu}"></p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12 text-end">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

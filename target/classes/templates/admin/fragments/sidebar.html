@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-dvTqFo6lTb6/nEMr+gRpeivT1DIjU7xxnInlKN1/Q1mv17Pq7icrI+1yyBJ7tm4bvApB9msaoIu/3nLNi5tewA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:fragment="sidebar">
+		<!-- Sidebar - Brand -->
+		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+			<div class="sidebar-brand-icon rotate-n-15">
+			</div>
+			<div class="sidebar-brand-text ">
+				Leopard <sup>Store</sup>
+			</div>
+		</a>
+		<!-- Divider -->
+		<hr class="sidebar-divider my-0">
+		<!-- Nav Item - Dashboard -->
+		<li class="nav-item active"><a class="nav-link" href="index.html"> 
+		<i class="fas fa-fw fa-tachometer-alt"></i> <span>Thống kê</span></a></li>
+		<!-- Divider -->
+		<hr class="sidebar-divider">
+		<!-- Heading -->
+		<div class="sidebar-heading">Bán hàng</div>
+		<!-- Nav Item - Pages Collapse Menu -->
+		<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+				 <span><i class="fa-solid fa-nose"></i>BÁN HÀNG TẠI QUẦY</span>
+		</a>
+			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Custom Components:</h6>
+					<a class="collapse-item" href="buttons.html">Buttons</a> <a class="collapse-item" href="cards.html">Cards</a>
+				</div>
+			</div></li>
+		<!-- Nav Item - Utilities Collapse Menu -->
+		<!-- Divider -->
+		<hr class="sidebar-divider">
+		<!-- Heading -->
+		<div class="sidebar-heading">Quản lý</div>
+		<!-- Nav Item - Pages Collapse Menu -->
+		<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse"
+		 data-target="#quanLySanPham" aria-expanded="true" aria-controls="quanLySanPham"> 
+			 <span>QUẢN LÝ SẢN PHẨM</span>
+		</a>
+			<div id="quanLySanPham" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Thao tác</h6>
+					<a class="collapse-item" th:href="@{/admin/product}">Danh sách</a> 
+					 <a class="collapse-item" th:href="@{/admin/product/add}">Tạo mới</a>
+				</div>
+			</div>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#quanLyHoaDon" aria-expanded="true"
+			 aria-controls="quanLyHoaDon"> 
+			 <span>QUẢN LÝ HÓA ĐƠN </span>
+		</a>
+			<div id="quanLyHoaDon" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Thao tác</h6>
+					<a class="collapse-item" th:href="@{/admin/DonHang/TatCaDon}">Danh sách</a> 
+				</div>
+			</div></li>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#quanLyNguoiDung" aria-expanded="true"
+			 aria-controls="collapsePages"> 
+			 <span>QUẢN LÝ NGƯỜI DÙNG</span>
+		</a>
+			<div id="quanLyNguoiDung" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Thao tác</h6>
+					<a class="collapse-item" th:href="@{/admin/NguoiDung}">Danh sách</a> 
+					 <a class="collapse-item" th:href="@{/NguoiDung/themMoi}">Tạo mới</a>
+				</div>
+			</div></li>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#quanLyKhuyenMai" aria-expanded="true" aria-controls="collapsePages"> 
+			 <span>QUẢN LÝ KHUYẾN MẠI</span>
+		</a>
+			<div id="quanLyKhuyenMai" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Thao tác</h6>
+					<a class="collapse-item" th:href="@{/admin/voucher}">Danh sách</a> 
+					 <a class="collapse-item" th:href="@{/admin/voucher/create}">Tạo mới</a>
+				</div>
+			</div></li>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#quanLyKhachHang" aria-expanded="true" aria-controls="collapsePages"> 
+			 <span>QUẢN LÝ KHÁCH HÀNG</span>
+		</a>
+			<div id="quanLyKhachHang" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<h6 class="collapse-header">Thao tác</h6>
+					<a class="collapse-item" th:href="@{/admin/khach-hang/danh-sach}">Danh sách</a> 
+					 <a class="collapse-item" th:href="@{/admin/khach-hang/danh-sach/chinh-sua}">Tạo mới</a>
+				</div>
+			</div></li>
+		<!-- Divider -->
+		<hr class="sidebar-divider d-none d-md-block">
+		<!-- Sidebar Toggler (Sidebar) -->
+		<div class="text-center d-none d-md-inline">
+			<button class="rounded-circle border-0" id="sidebarToggle"></button>
+		</div>
+		
+	</ul>
+</body>
+</html>

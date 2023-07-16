@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/admin/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/css/fonts-googleapis.css}">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/admin/js/jquery.min.js}"></script>
+    <script th:src="@{/admin/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/admin/js/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
+    <script th:src="@{/admin/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/admin/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/admin/js/demo/datatables-demo.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <!-- Thư viện SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .table {
+            background-color: #fff;
+        }
+
+        .table thead th {
+            font-weight: bold;
+            background-color: #f2f2f2;
+            color: #333;
+            border-top: none;
+        }
+
+        .table tbody td {
+            border-top: none;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .modal-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* CSS cho modal */
+        .modal-content {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            text-align: right;
+        }
+
+        /* CSS cho các phần tử trong modal */
+        .modal-body p {
+            margin-bottom: 10px;
+        }
+
+        .modal-body span {
+            font-weight: bold;
+        }
+
+        .modal-footer button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .modal-footer button:hover {
+            background-color: #0069d9;
+        }
+
+        .modal-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .modal-container {
+            width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .modal-wrapper:before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 420px;
+            height: 420px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-body p {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* css tìm kiếm */
+        .search-input {
+            width: 300px;
+            /* Độ dài thanh tìm kiếm */
+            border-radius: 0;
+            float: left;
+        }
+
+        .search-button {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        /* css thêm sửa xóa */
+        .action-icons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .vandai1 {
+            display: flex;
+            gap: 5px;
+            justify-content: flex-end;
+            justify-content: space-between;
+        }
+
+        .vandai1>* {
+            margin-right: 15px;
+        }
+
+        .pagination-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination li {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .pagination li a {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .pagination li a:hover {
+            background-color: #e0edf2;
+        }
+
+        .pagination li.active a {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* trạng thái */
+        label {
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 180px;
+            vertical-align: middle;
+        }
+
+        option {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" layout:fragment="content">
+        <h1>Nhân Viên</h1>
+        <div class="vandai1">
+            <!-- From tìm kiếm -->
+            <form action="/admin/search" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Tìm Kiếm..." id="search-input-allHD-name">
+                    <div class="search-input">
+                        <button class="btn btn-primary" type="button" onclick="searchByCustomerNameAndPhoneAllHD()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <a href="/admin/NguoiDung" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <!-- From tìm ngày tạo -->
+            <form>
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" id="search-input-allHD-date">
+                    <button class="btn btn-primary" type="button" onclick="searchByCreationDate()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            <!-- From tìm Trạng thái -->
+            <form>
+                <div class=" mb-3">
+                    <label for="status">Trạng Thái:</label>
+                    <select id="status" onchange="filterByStatus()">
+                        <option value="all">Tất Cả</option>
+                        <option value="active">Đang Hoạt Động</option>
+                        <option value="inactive">Không Hoạt Động</option>
+                    </select>
+                </div>
+            </form>
+            <!-- From thêm -->
+            <div class="mb-3">
+                <a href="/NguoiDung/themMoi" class="btn btn-primary">
+                    <i class="fa fa-plus-circle bigger-110 purple"></i>
+                </a>
+            </div>
+
+        </div>
+        <table id="user-name-label" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Mã Nhân Viên</th>
+                    <th scope="col">Tên Nhân Viên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Số Điện Thoại</th>
+                    <th scope="col">Ngày Tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" th:data-user-id="${user.id}">
+                    <td th:text="${user.maNguoiDung}"></td>
+                    <td th:text="${user.tenNguoiDung}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.soDienThoai}"></td>
+                    <td th:text="${#dates.format(user.ngayCapNhat, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <div class="btn-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" th:id="'trangThai-' + ${user.id}" th:checked="${user.trangThai eq 0}">
+                                <label class="custom-control-label" th:for="'trangThai-' + ${user.id}"></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <!-- From sửa -->
+                        <div class="btn-group">
+                            <a th:href="@{'/chinhSua/' + ${user.id}}" class="btn btn-warning btn-sm" type="submit">
+                                <i class="fas fa-edit text-primary"></i>
+                            </a>
+                        </div>
+                        <!-- From xóa -->
+                        <div class="btn-group">
+                            <a th:href="@{'/xoa/' + ${user.id}}" class="btn btn-danger btn-sm" type="submit">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </thead>
+        </table>
+        <!--From phân trang-->
+        <div class="pagination-container">
+            <div class="pagination">
+                <ul>
+                    <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+                        <a th:href="@{/admin/NguoiDung(page=${pageNumber})}" th:text="${pageNumber}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+<!-- Xử lý phân trang -->
+<script th:inline="javascript">
+    function changePage(event, pageNumber) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/admin/NguoiDung?page=" + pageNumber);
+        xhr.onload = function () {
+            if (xhr.status === 800) {
+                // Cập nhật nội dung trang mới
+                var newPageContent = xhr.responseText;
+                document.getElementById("table-container").innerHTML = newPageContent;
+            }
+        };
+        xhr.send();
+    }
+</script>
+
+<!-- Lọc Trạng Thái -->
+<script th:inline="javascript">
+    function filterByStatus() {
+        var selectedStatus = document.getElementById("status").value.toLowerCase();
+        var rows = document.querySelectorAll("#user-name-label tbody tr");
+
+        rows.forEach(function (row) {
+            var statusCell = row.querySelector("td:nth-child(6) input[type='checkbox']");
+            var status = statusCell.checked ? "active" : "inactive";
+            var displayRow = false;
+
+            if (selectedStatus === "all" || selectedStatus === status) {
+                displayRow = true;
+            }
+            if (displayRow) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+</script>
+
+<!--Tìm kiếm mã nv,tên,eamil,sđt -->
+<script th:inline="javascript">
+    function searchByCustomerNameAndPhoneAllHD() {
+        var input = document.getElementById("search-input-allHD-name").value.toLowerCase();
+        var table = document.getElementById("user-name-label");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var idCell = rows[i].getElementsByTagName("td")[0];
+            var customerNameCell = rows[i].getElementsByTagName("td")[1];
+            var emailCell = rows[i].getElementsByTagName("td")[2];
+            var phoneCell = rows[i].getElementsByTagName("td")[3];
+
+            if (idCell && customerNameCell && emailCell && phoneCell) {
+                var idCell = idCell.textContent || idCell.innerText;
+                var customerName = customerNameCell.textContent || customerNameCell.innerText;
+                var emailCell = emailCell.textContent || emailCell.innerText;
+                var phoneNumber = phoneCell.textContent || phoneCell.innerText;
+                idCell = idCell.toLowerCase();
+                customerName = customerName.toLowerCase();
+                emailCell = emailCell.toLowerCase();
+                phoneNumber = phoneNumber.toLowerCase();
+
+                if (
+                    (idCell.indexOf(input) > -1 ||
+                    customerName.indexOf(input) > -1 ||
+                    phoneNumber.indexOf(input) > -1 ||
+                    emailCell.toString().indexOf(input) > -1)
+                ) {
+                    rows[i].style.display = "";
+
+                    var searchLabel = input;
+                    if (idCell.indexOf(input) > -1) {
+                        searchLabel += " (Mã Nhân Viên)";
+                    }
+                    if (customerName.indexOf(input) > -1) {
+                        searchLabel += " (Tên Nhân Viên)";
+                    }
+                    if (phoneNumber.indexOf(input) > -1) {
+                        searchLabel += " (Số Điện Thoại)";
+                    }
+
+                    if (emailCell.indexOf(input) > -1) {
+                        searchLabel += " (Email)";
+                    }
+                    document.getElementById("search-input-allHD-name").value = searchLabel;
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<!-- Tìm kiếm ngày tạo -->
+<script th:inline="javascript">
+    function searchByCreationDate() {
+        var inputDate = document.getElementById("search-input-allHD-date").value;
+        var table = document.getElementById("user-name-label");
+        var rows = table.getElementsByTagName("tr");
+        var found = false;
+
+        for (var i = 0; i < rows.length; i++) {
+            var creationDateCell = rows[i].getElementsByTagName("td")[4]; // Điều chỉnh chỉ mục nếu cần thiết
+
+            if (creationDateCell) {
+                var creationDate = creationDateCell.innerText;
+                var formattedCreationDate = formatDate(creationDate);
+
+                if (formattedCreationDate === inputDate) {
+                    rows[i].style.display = "";
+                    found = true;
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+        if (found) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Tìm kiếm thành công!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Không tìm thấy',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+    function formatDate(dateString) {
+        var parts = dateString.split("/");
+        var day = parts[0];
+        var month = parts[1];
+        var year = parts[2];
+        return year + "-" + month + "-" + day;
+    }
+</script>
+
+<!-- Nút bật/tắt trạng thái -->
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('.custom-control-input').click(function() {
+            var userId = $(this).closest('tr').data('user-id');
+            var statusCheckbox = $(this);
+            var status = statusCheckbox.is(':checked') ? 0 : 1;
+
+            $.post("/updateStatus", { userId: userId, status: status }, function(data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cập nhật thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }).fail(function(error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Có lỗi xảy ra',
+                    text: error.responseText
+                });
+            });
+        });
+    });
+</script>
+
+

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/index}">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/admin/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/css/fonts-googleapis.css}">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/admin/js/jquery.min.js}"></script>
+    <script th:src="@{/admin/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/admin/js/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
+    <script th:src="@{/admin/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/admin/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/admin/js/demo/datatables-demo.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bao gồm thư viện jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
+    <!-- CSS của jQuery UI (nếu cần) -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <!-- Thư viện SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        .button-group {
+            display: flex;
+        }
+
+        .action-button {
+            flex: 0 0 100px; /* Đặt kích thước nút */
+            max-width: 100px; /* Đặt kích thước tối đa */
+            margin-right: 5px; /* Khoảng cách giữa các nút */
+        }
+
+        .action-button:last-child {
+            margin-right: 0; /* Loại bỏ margin phải của nút cuối cùng */
+        }
+
+        #modalChiTiet .modal-dialog {
+            max-width: 1400px;
+            width: 1400px;
+        }
+
+        #modalChiTiet .modal-content {
+            height: 450px;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination li a {
+            display: inline-block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .pagination li a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination .active a {
+            background-color: #ccc;
+            cursor: default;
+        }
+
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #4c9aff;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+        }
+
+        h1:before {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4c9aff;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .action-button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-button:focus {
+            outline: none;
+        }
+
+
+        body {
+            margin-top: 20px;
+        }
+
+        .timeline-steps .timeline-step {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 1rem
+        }
+
+        @media (min-width: 768px) {
+            .timeline-steps .timeline-step:not(:last-child):after {
+                content: "";
+                display: block;
+                border-top: .25rem dotted #3b82f6;
+                width: 3.46rem;
+                position: absolute;
+                left: 7.5rem;
+                top: .3125rem
+            }
+
+            .timeline-steps .timeline-step:not(:first-child):before {
+                content: "";
+                display: block;
+                border-top: .25rem dotted #3b82f6;
+                width: 3.8125rem;
+                position: absolute;
+                right: 7.5rem;
+                top: .3125rem
+            }
+        }
+
+        .timeline-steps .timeline-content {
+            width: 10rem;
+            text-align: center
+        }
+
+        .timeline-steps .timeline-content .inner-circle {
+            border-radius: 1.5rem;
+            height: 1rem;
+            width: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3b82f6
+        }
+
+        .timeline-steps .timeline-content .inner-circle:before {
+            content: "";
+            background-color: #3b82f6;
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
+            min-width: 3rem;
+            border-radius: 6.25rem;
+            opacity: .5
+        }
+
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .button-group button {
+            flex: 1;
+            height: 30px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 15px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-group-a button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .button-group-a button {
+            flex: 1;
+            height: 30px;
+            width: 50px;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 5px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-group-a button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .hduong1 button {
+            flex: 1;
+            height: 40px;
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 150px;
+            background-color: #4c9aff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hduong1 button:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .modal-header .btn-close {
+            display: none;
+        }
+
+        .modal-header .close {
+            display: none;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table thead th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .custom-tabs .nav-link {
+            position: relative;
+            padding: 10px 20px;
+            color: #333;
+            font-weight: bold;
+            background-color: #f2f2f2;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .custom-tabs .nav-link.active {
+            background-color: #4c9aff;
+            color: #fff;
+        }
+
+        .custom-tabs .nav-link:hover {
+            background-color: #357ae8;
+            color: #fff;
+        }
+
+        .custom-tabs .nav-link:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .custom-tabs .nav-link.active:before {
+            background-color: #fff;
+        }
+
+        .custom-tabs .nav-link:not(.active):before {
+            display: none;
+        }
+
+    </style>
+
+    <style>
+        .card-title {
+            text-align: center;
+        }
+
+        body {
+            background: #eee;
+            margin-top: 20px;
+        }
+
+        .hori-timeline .events {
+            border-top: 3px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hori-timeline .events .event-list {
+            display: block;
+            position: relative;
+            text-align: center;
+            padding-top: 70px;
+            margin-right: 0;
+            width: 19.5%;
+            flex: 0 0 19.5%;
+            padding-bottom: 30px;
+        }
+
+        .hori-timeline .events .event-list:before {
+            content: "";
+            position: absolute;
+            height: 36px;
+            border-right: 2px dashed #dee2e6;
+            top: 0;
+        }
+
+        .hori-timeline .events .event-list .event-date {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            width: 90px;
+            margin: 0 auto;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        @media (max-width: 900px) {
+            .hori-timeline .events .event-list {
+                width: 100%;
+                flex: 0 0 100%;
+            }
+        }
+
+        .bg-soft-primary {
+            background-color: rgba(64, 144, 203, 0.3) !important;
+        }
+
+        .bg-soft-success {
+            background-color: rgba(71, 189, 154, 0.3) !important;
+        }
+
+        .bg-soft-danger {
+            background-color: rgba(231, 76, 94, 0.3) !important;
+        }
+
+        .bg-soft-warning {
+            background-color: rgba(249, 213, 112, 0.3) !important;
+        }
+
+        .card {
+            border: none;
+            margin-bottom: 24px;
+            -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+            box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+        }
+    </style>
+
+
+    <!-- TIMELINE-->
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('#modalChiTiet').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var hoaDonId = button.data('id');
+                var modal = $(this);
+
+                $.ajax({
+                    url: '/giaodich/hoadon/HuyDonHang/' + hoaDonId,
+                    type: 'GET',
+                    success: function (data) {
+                        modal.find('.modal-body1').html(data);
+                    },
+                    error: function () {
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script th:inline="javascript">
+        function quayLai() {
+            window.location.href = "/admin/DonHang/DaHuyHang";
+        }
+    </script>
+
+</head>
+
+<body>
+<div class="container" layout:fragment="content">
+    <h1>CHI TIẾT HÓA ĐƠN</h1>
+
+    <div th:object="${hoaDon}">
+        <p>Mã đơn: <span th:text="${hoaDon.maDon}"></span></p>
+        <p>Ngày tạo: <span th:text="${#dates.format(hoaDon.ngayTao, 'dd/MM/yyyy')}"></span></p>
+        <p>Tên khách hàng: <span th:text="${hoaDon.khachHang.hoTen}"></span></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="hdct : ${hoaDon.hoaDonChiTiets}">
+                <td></td>
+                <td
+                        th:text="${hdct.sanPhamChiTiet.sanPham.getTenSanPham()}">
+                </td>
+                <td th:text="${hdct.donGia}"></td>
+                <td th:text="${hdct.soLuong}"></td>
+                <td th:text="${hdct.tongTien}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>Tổng tiền:
+            <span th:text="${hoaDon.tongTienDonHang}"></span>
+        </p>
+    </div>
+
+
+    <!--TIME LINE-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list" th:each="giaoDich1 : ${timeLineChoXacNhan}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-primary"><span
+                                                th:text="${#dates.format(giaoDich1.ngayTao, 'dd/MM/yyyy')}"></span>
+                                        </div>
+                                        <h5 class="font-size-16">Chờ xác nhận</h5>
+                                        <p class="text-muted">Thao tác: Tạo đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: <span
+                                                th:text="${giaoDich1.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">Không</div>
+                                        <h5 class="font-size-16">Chờ giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Xác nhận đơn</p>
+                                        <p class="text-muted">Người thao tác: Không có dữ liệu</span></p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">Không</div>
+                                        <h5 class="font-size-16">Đang giao hàng</h5>
+                                        <p class="text-muted">Thao tác: Giao hàng cho đơn vị vận chuyển</p>
+                                        <p class="text-muted">Người thao tác: Không có dữ liệu</span></p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">Không</div>
+                                        <h5 class="font-size-16">Đã giao hàng</h5>
+                                        <p class="text-muted">Đơn hàng đã được giao</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list" th:each="giaoDich2 : ${timeLineHuyDonHang}">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success"><span
+                                                th:text="${#dates.format(giaoDich2.ngayTao, 'dd/MM/yyyy')}"></span>
+                                        </div>
+                                        <h5 class="font-size-16">Đơn hàng bị hủy</h5>
+                                        <p class="text-muted">Thao tác: Hủy đơn hàng</p>
+                                        <p class="text-muted">Người thao tác: <span
+                                                th:text="${giaoDich2.nguoiTao}"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="action-button" onclick="quayLai()">Quay lại
+            <i class="fas fa-arrow-left"></i>
+        </button>
+    </div>
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

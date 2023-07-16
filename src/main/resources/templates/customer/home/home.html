@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<<<<<<< HEAD
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{customer/layouts/index}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Trang chủ</title>
+	<link th:href="@{/customer/css/fonts-googleapis.css}" rel="stylesheet">
+=======
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{customer/layouts/index}">
+>>>>>>> 1f792fc8fff24f6093ead2a1bf8a220f7b8aad4b
+
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chủ</title>
+</head>
+
+<body>
+<<<<<<< HEAD
+	<section class="product spad" layout:fragment="content">
+	        <div class="container">
+	        	<h1>Hello customer</h1>
+	        </div>
+	  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/customer/js/bootstrap.min.js}"></script>
+    <script th:src="@{/customer/js/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/customer/js/jquery.nicescroll.min.js}"></script>
+    <script th:src="@{/customer/js/jquery.magnific-popup.min.js}"></script>
+    <script th:src="@{/customer/js/jquery.countdown.min.js}"></script>
+    <script th:src="@{/customer/js/jquery.slicknav.js}"></script>
+    <script th:src="@{/customer/js/mixitup.min.js}"></script>
+    <script th:src="@{/customer/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/customer/js/main.js}"></script>
+=======
+    <section layout:fragment="content">
+        <span th:replace="customer/fragments/section_start :: section-start"></span>
+        <!-- Banner Section Begin -->
+        <section class="banner spad">
+            <div class="container">
+                <div class="row">
+                    <!-- <div class="col-lg-7 offset-lg-4">
+                        <div class="banner__item">
+                            <div class="banner__item__pic">
+                                <img th:src="${'/admin/product/images/' + .image}" alt="">
+                            </div>
+                            <div class="banner__item__text">
+                                <h2>Clothing Collections 2030</h2>
+                                <a href="#">Shop now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="banner__item banner__item--middle">
+                            <div class="banner__item__pic">
+                                <img th:src="${'/admin/product/images/' + .image}" alt="">
+                            </div>
+                            <div class="banner__item__text">
+                                <h2>Accessories</h2>
+                                <a href="#">Shop now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="banner__item banner__item--last">
+                            <div class="banner__item__pic">
+                                <img th:src="${'/admin/product/images/' + .image}" alt="">
+                            </div>
+                            <div class="banner__item__text">
+                                <h2>Shoes Spring 2030</h2>
+                                <a href="#">Shop now</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+        <!-- Banner Section End -->
+
+        <!-- Product Section Begin -->
+        <section class="product spad">
+            <div class="container">
+                <!-- <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="filter__controls">
+                            <li class="active" data-filter="*">Bán chạy nhất</li>
+                            <li data-filter=".new-arrivals">Sản phẩm mới</li>
+                            <li data-filter=".hot-sales">Hot Sales</li>
+                        </ul>
+                    </div>
+                </div> -->
+
+                <!-- new-arrivals hot-sales new-arrivals
+                <span class="label">New</span> -->
+
+                <div class="row product__filter">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix"
+                        th:each="images, istat1 : ${resultLst}">
+                        <div class="product__item" th:each="img, istat2 : *{images[__${istat1.index}__]}">
+                            <div class="product__item__pic set-bg"
+                                th:data-setbg="${'/customer/home/images/' +  img[__${0}__].tenAnh}">
+                                <!-- <span class="label">New</span> -->
+                                <section th:replace="customer/fragments/product_hover :: product-hover"></section>
+                            </div>
+                            <div class="product__item__text">
+                                <h6 th:text="${image.sanPham.tenSanPham}">Piqué Biker Jacket</h6>
+                                <a href="#" class="add-cart">+ Add To Cart</a>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5 th:text="${image.sanPham.gia}"></h5>
+                                <h5> đ</h5>
+                                <div class="product__color__select">
+                                    <input type="number" th:value="${image.sanPham.id}" hidden>
+                                    <label th:for="${'pc-'+ img.tenAnh}">
+                                        <input type="radio" th:id="${'pc-'+ img.tenAnh}"
+                                            th:value="${image.mauSac.maMauSac}" th:img-name="${img.tenHinhAnh}"
+                                            onclick="getHinhAnhByMauSac(this.getAttribute('th:img-name'))">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <script th:inline="javascript">
+                            function getHinhAnhByMauSac() {
+
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <span th:replace="customer/fragments/section_lastest :: section-last"></span>
+        </section>
+
+        <script th:src="@{/customer/js/jquery-3.3.1.min.js}"></script>
+        <script th:src="@{/customer/js/bootstrap.min.js}"></script>
+        <script th:src="@{/customer/js/jquery.nice-select.min.js}"></script>
+        <script th:src="@{/customer/js/jquery.nicescroll.min.js}"></script>
+        <script th:src="@{/customer/js/jquery.magnific-popup.min.js}"></script>
+        <script th:src="@{/customer/js/jquery.countdown.min.js}"></script>
+        <script th:src="@{/customer/js/jquery.slicknav.js}"></script>
+        <script th:src="@{/customer/js/mixitup.min.js}"></script>
+        <script th:src="@{/customer/js/owl.carousel.min.js}"></script>
+        <script th:src="@{/customer/js/main.js}"></script>
+>>>>>>> 1f792fc8fff24f6093ead2a1bf8a220f7b8aad4b
+</body>
+
+
+</html>

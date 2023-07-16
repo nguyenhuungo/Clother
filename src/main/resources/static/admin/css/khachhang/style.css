@@ -1,0 +1,13 @@
+.error{
+	color : red ;
+	font-size : 12px;
+	width: 100% ;
+	margin-top : 10px ;
+	padding-left: 10px ;
+}
+body{
+	background-color :white ;
+	font-size: 18px ;
+	color: black ;
+}
+

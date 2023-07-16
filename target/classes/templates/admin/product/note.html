@@ -1,0 +1,55 @@
+<!-- <div th:if="*{isEdit == true}">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold">
+                            Cập nhật hình ảnh cho sản phẩm
+                        </h6>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12 card mb-4 mt-4" th:each="item, istat : *{lstHinhAnhMauSacDTO}">
+                            <div class="row">
+                                <div class="col-sm-12 mt-3">
+                                    <div class="col-sm-12">
+                                        <h6>Tên màu sắc của sản phẩm đang thêm ảnh: <span
+                                                th:text="${item.tenMauSacAddImg}"></span></h6>
+                                        <input type="number" class="form-control"
+                                            th:field="*{lstHinhAnhMauSacDTO[__${istat.index}__].mauSacAddImagesId}"
+                                            name="mauSacAddImagesId" th:value="${item.mauSacAddImagesId}" hidden />
+                                        <br>
+                                        <hr><br>
+                                        <div class="row"
+                                            th:each="img, istatHAMS : *{lstHinhAnhMauSacDTO[__${istat.index}__].imgFilesString}">
+                                            <img alt="" th:id="'imgItem' + ${istat.index} + ${istatHAMS.index}"
+                                                width="120px" th:src="${'/admin/product/images/' + img}">
+                                            <input type="file" th:id="'inp-add-'+ ${istat.index} + ${istatHAMS.index}"
+                                                th:src="${'/admin/product/images/' + img}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <script th:inline="javascript">
+                                    $(document).ready(function () {
+                                        var index1 = '[[${istat.index}]]';
+
+                                        $('#inp-add-' + index1).fileinput({
+                                            uploadUrl: '#',
+                                            //uploadUrl: 'http://localhost/plugins/test-upload',
+                                            initialPreviewAsData: false,
+                                            // initialPreview: [
+
+                                            // ]
+                                        })
+                                    })
+                                </script>
+                                <hr class="mt-2 mb-2">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-sm-12 mt-3 pb-5">
+                            <div class="float-right">
+                                <a class="btn btn-primary"
+                                    onclick="flexUrlSubmit('saveImageProductDetail', 'post', 'AddProduct')">
+                                    <span>Hoàn tất thêm sản phẩm <img th:src="@{/admin/img/icons/save.svg}"
+                                            aria-label="chi tiết" /></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->

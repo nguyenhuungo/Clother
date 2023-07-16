@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "storage",
+      "type": "com.fpoly.config.StorageProperties",
+      "sourceType": "com.fpoly.config.StorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "storage.location",
+      "type": "java.lang.String",
+      "sourceType": "com.fpoly.config.StorageProperties"
+    }
+  ],
+  "hints": []
+}
